@@ -18,11 +18,29 @@ public class StringCalculator
     // 3. 빈 문자열인 경우 0을 반환한다.
     int add(String text)
     {
-        // 빈문자열 또는 null인 경우 0을 반환한다.
-        if(text == null) return 0;
-        if(text.isEmpty()) return 0;
+        // 1. 빈문자열 또는 null을 입력할 경우 0을 반환해야한다.
+        if(text == null || text.isEmpty()) return 0;
 
-        String[] nums = text.split(",|:");
+        // 3. 숫자 두개를 쉼표 구분자로 입력할 경우 두 숫자의 합을 반환한다.
+        // if(text.contains(","))
+        // 4.1. 구분자 없이 문자열 한개가 입력되는 경우 split 적용하면 0번째 index에 담긴다.
+        String[] values = text.split(",");
+
+        int sum = 0;
+
+        for (String value : values)
+        {
+            sum += Integer.parseInt(value);
+        }
+
+        return sum;
+
+        // 2. 숫자 하나를 문자열로 입력할 경우 해당 숫자를 반환한다.
+        //return Integer.parseInt(text);
+
+
+
+        /*String[] nums = text.split(",|:");
 
         Matcher m = Pattern.compile("//(.)\n(.*)").matcher(text);
         if(m.find())
@@ -54,7 +72,7 @@ public class StringCalculator
             }
         }
 
-        return result;
+        return result;*/
     }
 
 
