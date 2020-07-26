@@ -30,14 +30,14 @@ public class StringCalculatorTest
         assertEquals(9, cal.add("9"));
     }
 
-    // 3. 숫자 두개를 쉼표 구분자로 입력할 경우 두 숫자의 합을 반환한다.
+    // 3.1 숫자 두개를 쉼표 구분자로 입력할 경우 두 숫자의 합을 반환한다.
     @Test
     public void add_devide_number()
     {
         assertEquals(7, cal.add("3,4"));
     }
 
-    // 4.1. 문자열 한개가 입력되는 경우 split  테스트
+    // 3.2. 문자열 한개가 입력되는 경우 split  테스트
     @Test
     public void test_split()
     {

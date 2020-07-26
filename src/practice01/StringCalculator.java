@@ -19,13 +19,28 @@ public class StringCalculator
     int add(String text)
     {
         // 1. 빈문자열 또는 null을 입력할 경우 0을 반환해야한다.
-        if(text == null || text.isEmpty()) return 0;
+        //if(text == null || text.isEmpty()) return 0;
 
-        // 3. 숫자 두개를 쉼표 구분자로 입력할 경우 두 숫자의 합을 반환한다.
+        // 3.5. 빈문자열 또는 null인지 확인하는 메소드를 분리한다.
+        if(isBlank(text)) return 0;
+
+        // 3.1 숫자 두개를 쉼표 구분자로 입력할 경우 두 숫자의 합을 반환한다.
         // if(text.contains(","))
-        // 4.1. 구분자 없이 문자열 한개가 입력되는 경우 split 적용하면 0번째 index에 담긴다.
+        // 3.2. 구분자 없이 문자열 한개가 입력되는 경우 split 적용하면 0번째 index에 담긴다.
         String[] values = text.split(",");
 
+        return sum(toInts(values));
+
+        // 3.4. 문자를 숫자로 바꾸는 메소드를 분리한다.
+        // return sum(values);
+        // 2. 숫자 하나를 문자열로 입력할 경우 해당 숫자를 반환한다.
+        //return Integer.parseInt(text);
+
+    }
+
+    // 3.3. 숫자의 합을 구하는 메소드를 분리한다.
+    /*private int sum(String[] values)
+    {
         int sum = 0;
 
         for (String value : values)
@@ -34,46 +49,37 @@ public class StringCalculator
         }
 
         return sum;
+    }*/
+    // 3.4. 문자를 숫자로 바꾸는 메소드를 분리한다.
+    private int sum(int[] numbers)
+    {
+        int sum = 0;
 
-        // 2. 숫자 하나를 문자열로 입력할 경우 해당 숫자를 반환한다.
-        //return Integer.parseInt(text);
-
-
-
-        /*String[] nums = text.split(",|:");
-
-        Matcher m = Pattern.compile("//(.)\n(.*)").matcher(text);
-        if(m.find())
+        for (int number : numbers)
         {
-            String customDevide = m.group(1);
-            nums = m.group(2).split(customDevide);
+            sum += number;
         }
 
-        int result = 0;
-        for(int i=0; i< nums.length; i++)
-        {
-            try
-            {
-                String num = nums[i];
-                if(" ".equals(num)) num = "0";
-                int number = Integer.parseInt(num);
-
-                if(number < 0)
-                {
-                    new RuntimeException();
-                    break;
-                }
-
-                result += number;
-            }
-            catch (RuntimeException e)
-            {
-                System.out.println("양수값을 입력해주세요.");
-            }
-        }
-
-        return result;*/
+        return sum;
     }
 
+    // 3.4. 문자를 숫자로 바꾸는 메소드를 분리한다.
+    private int[] toInts(String[] values)
+    {
+        int[] numbers = new int[values.length];
+
+        for (int i = 0; i < values.length ; i++)
+        {
+            numbers[i] = Integer.parseInt(values[i]);
+        }
+
+        return numbers;
+    }
+
+    // 3.5. 빈문자열 또는 null인지 확인하는 메소드를 분리한다.
+    private boolean isBlank(String text)
+    {
+        return text == null || text.isEmpty();
+    }
 
 }
