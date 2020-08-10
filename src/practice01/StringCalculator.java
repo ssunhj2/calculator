@@ -27,9 +27,10 @@ public class StringCalculator
         // 3.1 숫자 두개를 쉼표 구분자로 입력할 경우 두 숫자의 합을 반환한다.
         // if(text.contains(","))
         // 3.2. 구분자 없이 문자열 한개가 입력되는 경우 split 적용하면 0번째 index에 담긴다.
-        String[] values = text.split(",");
+        // 3.5. 빈문자열 또는 null인지 확인하는 메소드를 분리한다
+        //String[] values = text.split(",");
 
-        return sum(toInts(values));
+        return sum(toInts(split(text)));
 
         // 3.4. 문자를 숫자로 바꾸는 메소드를 분리한다.
         // return sum(values);
@@ -70,16 +71,46 @@ public class StringCalculator
 
         for (int i = 0; i < values.length ; i++)
         {
-            numbers[i] = Integer.parseInt(values[i]);
+            //numbers[i] = Integer.parseInt(values[i]);
+            // 3.8. 음수가 전달되는 경우 RuntimeException 예외를 throw 한다.
+            numbers[i] = toNegative(values[i]);
         }
 
         return numbers;
+    }
+    // 3.8. 음수가 전달되는 경우 RuntimeException 예외를 throw 한다.
+    private int toNegative(String value)
+    {
+        int number = Integer.parseInt(value);
+        if(number < 0)
+        {
+            throw new RuntimeException();
+        }
+
+        return number;
     }
 
     // 3.5. 빈문자열 또는 null인지 확인하는 메소드를 분리한다.
     private boolean isBlank(String text)
     {
         return text == null || text.isEmpty();
+    }
+
+    private String[] split(String text)
+    {
+        // 3.5. split 메소드를 분리한다.
+        //return text.split(",");
+        // 3.6. 쉼표(,) 이외에 콜론(:)으로 문자열을 구분할 수 있도록 처리한다.
+        //return text.split(",|:");
+        // 3.7. //와 \n 문자 사이에 커스텀 구분자를 지정할 수 있다.
+        Matcher m = Pattern.compile("//(.)\n(.*)").matcher(text);
+        if(m.find())
+        {
+            String custumSplit = m.group(1);
+            return m.group(2).split(custumSplit);
+        }
+
+        return text.split(",|:");
     }
 
 }

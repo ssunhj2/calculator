@@ -44,6 +44,26 @@ public class StringCalculatorTest
         assertArrayEquals(new String[]{"3"}, "3".split(","));
         assertArrayEquals(new String[]{"4", "5"}, "4,5".split(","));
     }
-    
+
+    // 3.6. 쉼표(,) 이외에 콜론(:)으로 문자열을 구분할 수 있도록 처리한다.
+    @Test
+    public void add_devide_number2()
+    {
+        assertEquals(12, cal.add("3,4:5"));
+    }
+
+    // 3.7. //와 \n 문자 사이에 커스텀 구분자를 지정할 수 있다.
+    @Test
+    public void add_devide_number3()
+    {
+        assertEquals(12, cal.add("//-\n3-4-5"));
+    }
+
+    // 3.8. 음수가 전달되는 경우 RuntimeException 예외를 throw 한다.
+    @Test(expected = RuntimeException.class)
+    public void add_number_exception() throws Exception
+    {
+        cal.add("-5,4,3");
+    }
 
 }
